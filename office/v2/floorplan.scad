@@ -79,6 +79,34 @@ module voyagerstack() {
 
 }
 
+// https://shop.almasy.eu/nl/product/detail/2-niveaus-incl-spaanplaat/0YBKq
+module almamidi(rackw=800, rackl=2010, rackh=2500, shelves=4, shelfstarth=300) {
+    // rackl is the *total* length, including pole thickness!
+    polet=80; // seems to be always 80
+
+    color("#00f") {
+        translate([0, 0, 0])  cube([polet,polet,rackh]);
+        translate([rackw-polet, rackl-polet, 0]) cube([polet,polet,rackh]);
+        translate([0, rackl-polet, 0]) cube([polet,polet,rackh]);
+        translate([rackw-polet, 0, 0]) cube([polet,polet,rackh]);
+    }
+
+    module shelf() {
+        translate([0, polet, 0]) color("#ff5733") cube([polet, rackl-(2*polet), polet]);
+        translate([rackw-polet, polet, 0]) color("#ff5733") cube([polet, rackl-(2*polet), polet]);
+        translate([polet,polet,0]) color("#cdaa7d") cube([rackw-(2*polet), rackl-(2*polet), polet]);
+    }
+
+    availh=rackh-polet-shelfstarth;
+    shelves = shelves-1;
+
+    shelfspacing = (availh - (shelves * polet)) / shelves;
+
+    for (layer = [0:1:shelves]) {
+        translate([0,0,(shelfspacing*layer)+(layer*polet)+shelfstarth]) shelf();
+    }
+}
+
 translate([0, 0, 1]) color("#555") {
     translate([0, 240, 0]) cube([200, 810, 2000]); // heating
     translate([0, 4850, 0]) cube([200, 810, 2000]); // heating
@@ -87,14 +115,24 @@ translate([0, 0, 1]) color("#555") {
     translate([600, 5780, 0]) cube([1030, 50, 2250]); // window
 
     translate([9930, 1650, 0]) cube([80, 2370, 950]); // heating
+
+    translate([715,0,1920]) cube([565,50,575]);
+    translate([1400,0,1920]) cube([575,50,575]);
+    translate([2095,0,1920]) cube([575,50,575]);
 }
 
 translate([0, 0, 1]) {
     translate([0, 4250, 0]) fridge(); // fridge
     translate([0, 3480, 0]) cupboard(); // cupboard (coffee)
 
-    translate([5000, 5780-3010, 0]) storagerack(); // strorage rack
-    translate([5520, 5780-3010, 0]) storagerack(); // strorage rack
+    //translate([5000, 5780-3010, 0]) storagerack(); // strorage rack
+    //translate([5520, 5780-3010, 0]) storagerack(); // strorage rack
+
+    translate([4900,3800,0]) almamidi(rackw=1000); // almamidi
+    translate([4900,1790+80,0]) almamidi(rackw=1000); // almamidi
+
+    translate([8000,4800,0]) rotate(90) almamidi(rackw=1000, shelves=2, shelfstarth=1750); // almamidi over boxes
+    translate([9930,4800,0]) rotate(90) almamidi(rackw=1000, shelves=2, shelfstarth=1750); // almamidi over boxes
 
     translate([1500, 0,0]) desk_island(); // desk island
 
@@ -105,14 +143,14 @@ translate([0, 0, 1]) {
 
     translate([8600,100,0]) serverrack();
 
-    translate([9900-(0*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(1*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(2*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(3*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(4*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(5*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(6*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
-    translate([9900-(7*460),5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(0*460)-70,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(1*460)-70,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(2*460)-70,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(3*460)-70,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(4*460)-160,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(5*460)-160,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(6*460)-160,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
+    translate([9900-(7*460)-160,5800,0]) translate([-430,0,0]) rotate(270) voyagerstack();
 
     translate([9000, 3500-(0*460), 0]) voyagerstack();
     translate([9000, 3500-(1*460), 0]) voyagerstack();
