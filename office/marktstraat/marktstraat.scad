@@ -1,6 +1,8 @@
 cellar_width = 2430;
 cellar_length = 3040;
 cellar_height = 2200;
+cellar_door_height = 2050;
+cellar_door_width = 800;
 cellar_front_left = 820;
 cellar_front_right = 780;
 
@@ -24,7 +26,13 @@ office_height = 2620;
 interior_wall_thickness = 100;//guesstimate
 
 module cellar(){
-    square([cellar_width, cellar_length]);
+    square([cellar_length, cellar_width]);
+    translate([cellar_length,0,0]) {
+        difference(){
+            cube([interior_wall_thickness,cellar_width,cellar_height]);
+            translate([0,(cellar_width-cellar_door_width)/2,0]) cube([interior_wall_thickness+1,cellar_door_width,cellar_door_height]);
+        }
+    }
 }
 
 module office_floor(){
