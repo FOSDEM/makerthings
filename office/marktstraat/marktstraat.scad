@@ -1,8 +1,8 @@
 cellar_width = 2430;
 cellar_length = 3040;
 cellar_height = 2200;
-cellar_door_height = 2050;
-cellar_door_width = 800;
+door_height = 2050;
+door_width = 800;
 cellar_front_left = 820;
 cellar_front_right = 780;
 
@@ -25,12 +25,18 @@ office_height = 2620;
 
 interior_wall_thickness = 100;//guesstimate
 
+/* ------------------
+The rooms
+--------------------*/
 module cellar(){
+    //floor
     square([cellar_length, cellar_width]);
     translate([cellar_length,0,0]) {
         difference(){
+            //cellar front wall
             cube([interior_wall_thickness,cellar_width,cellar_height]);
-            translate([0,(cellar_width-cellar_door_width)/2,0]) cube([interior_wall_thickness+1,cellar_door_width,cellar_door_height]);
+            //cellar front wall door opening
+            translate([0,(cellar_width-door_width)/2,0]) cube([interior_wall_thickness+1,door_width,door_height]);
         }
     }
 }
@@ -58,7 +64,15 @@ module office_ceiling(){
 }
 
 module interior_wall(){
-    translate([0, office_front_length + office_main_length]) cube([office_main_width, interior_wall_thickness, office_height]);
+    translate([0, office_front_length + office_main_length]) {
+        difference() {
+            cube([office_main_width, interior_wall_thickness, office_height]);
+            //storage door opening
+            translate([(office_storage_width-door_width)/2,0,0]) cube([door_width, interior_wall_thickness+1, door_height]);
+            //kitchen door opening
+            translate([office_storage_width+(office_kitchen_width-door_width)/2,0,0]) cube([door_width, interior_wall_thickness+1, door_height]);
+        }
+    }
 }
 
 module storage_kitchen_wall(){
@@ -69,8 +83,24 @@ module kitchen_hall_wall() {
     translate([office_main_width-office_hall_width-interior_wall_thickness, office_front_length+office_main_length+interior_wall_thickness]) cube([interior_wall_thickness, office_back_length, office_height]);
 }
 
+/*----------------
+Furniture
+------------------*/
+module desk_island() {
+    color("#00f") {
+        difference() {
+            cube([1800, 2620, 740]);
+            translate([100, -100, -100]) cube([1600, 2820, 740]);
+            translate([-100, 100, -100]) cube([2000, 2420, 740]);
+        }
+    }
 
+    cube([1800, 2620, 1]); // the flickering floor was annoying
+}
 
+/*-----------------
+layout
+------------------*/
 
 translate([0,15000]) cellar();
 //office_ceiling();
@@ -78,3 +108,4 @@ office_floor();
 interior_wall();
 storage_kitchen_wall();
 kitchen_hall_wall();
+translate([1500,1000,0]) desk_island();
