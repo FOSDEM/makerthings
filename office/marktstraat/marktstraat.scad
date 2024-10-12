@@ -1,3 +1,5 @@
+include <../furniture.scad>
+
 cellar_width = 2430;
 cellar_length = 3040;
 cellar_height = 2200;
@@ -32,7 +34,7 @@ module cellar(){
     //floor
     square([cellar_length, cellar_width]);
     translate([cellar_length,0,0]) {
-        difference(){
+        render() difference(){
             //cellar front wall
             cube([interior_wall_thickness,cellar_width,cellar_height]);
             //cellar front wall door opening
@@ -65,12 +67,14 @@ module office_ceiling(){
 
 module interior_wall(){
     translate([0, office_front_length + office_main_length]) {
-        difference() {
+        render() difference() {
             cube([office_main_width, interior_wall_thickness, office_height]);
             //storage door opening
             translate([(office_storage_width-door_width)/2,0,0]) cube([door_width, interior_wall_thickness+1, door_height]);
             //kitchen door opening
             translate([office_storage_width+(office_kitchen_width-door_width)/2,0,0]) cube([door_width, interior_wall_thickness+1, door_height]);
+            //hall opening
+            translate([office_main_width-office_hall_width,0]) cube([office_hall_width, interior_wall_thickness+1, door_height]);
         }
     }
 }
@@ -83,21 +87,6 @@ module kitchen_hall_wall() {
     translate([office_main_width-office_hall_width-interior_wall_thickness, office_front_length+office_main_length+interior_wall_thickness]) cube([interior_wall_thickness, office_back_length, office_height]);
 }
 
-/*----------------
-Furniture
-------------------*/
-module desk_island() {
-    color("#00f") {
-        difference() {
-            cube([1800, 2620, 740]);
-            translate([100, -100, -100]) cube([1600, 2820, 740]);
-            translate([-100, 100, -100]) cube([2000, 2420, 740]);
-        }
-    }
-
-    cube([1800, 2620, 1]); // the flickering floor was annoying
-}
-
 /*-----------------
 layout
 ------------------*/
@@ -108,4 +97,39 @@ office_floor();
 interior_wall();
 storage_kitchen_wall();
 kitchen_hall_wall();
-translate([1500,1000,0]) desk_island();
+
+//office table
+translate([1000,150,0]) rotate([0,0,0]) desk_island();
+translate([1000,1950,0]) rotate([0,0,0]) desk_island();
+
+
+//buitenmuur
+translate([office_main_width-1000,office_front_length,0])almamidi(rackw=1000, rackh=2250, shelves=2, shelfstarth=1750);
+translate([office_main_width-1000,office_front_length+2000,0])almamidi(rackw=1000, rackh=2250, shelves=2, shelfstarth=1750);
+translate([office_main_width-1000,office_front_length+4000,0])almamidi(rackw=1000, rackh=2250, shelves=2, shelfstarth=1750);
+
+//centraal tegen binnenmuur
+translate([office_storage_width-500,office_front_length+office_main_length-2010,0])almamidi(rackw=1000, rackh=2250, shelves=4, shelfstarth=600);
+translate([office_storage_width-500+2010,office_front_length+office_main_length-2010*2+1000,0]) rotate([0,0,90]) almamidi(rackw=1000, rackh=2250, shelves=4, shelfstarth=600);
+
+//centraal tegen gangmuur
+translate([0,office_front_length+office_main_length-3010,0]) storagerack();
+
+
+// storage
+translate([600,office_front_length+office_main_length+interior_wall_thickness+office_back_length-600,0]) serverrack();
+
+translate([2250,office_front_length+office_main_length+interior_wall_thickness+office_back_length-800,0]) rotate([0,0,90]) almamidi(rackw=800, rackh=2250, shelves=2, shelfstarth=1250);
+
+// kitchen
+translate([office_storage_width+interior_wall_thickness+office_kitchen_width-550,office_front_length+ office_main_length+interior_wall_thickness+office_back_length-550,0]) fridge()
+
+// cellar
+translate([430,15000,0]) rotate([0,0,90]) voyagerstack();
+translate([930,15000,0]) rotate([0,0,90]) voyagerstack();
+translate([1430,15000,0]) rotate([0,0,90]) voyagerstack();
+translate([1930,15000,0]) rotate([0,0,90]) voyagerstack();
+translate([2430,15000,0]) rotate([0,0,90]) voyagerstack();
+translate([2930,15000,0]) rotate([0,0,90]) voyagerstack();
+
+translate([2850,15000+2430-600,0]) rotate([0,0,90]) almamidi(rackl=2700, rackw=600, rackh=2000, shelves=3, shelfstarth=100);
