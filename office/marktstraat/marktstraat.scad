@@ -8,6 +8,8 @@ office_front_window = 2620;
 office_front_side_window_left = 700;
 office_front_length = 2250;
 office_front_width = 4700;
+office_front_door_cutout_width = 200;
+office_front_door_cutout_length = 360;
 office_front_door_width = 1000;
 office_main_width = 5930;
 office_main_length = 6680;
@@ -27,7 +29,10 @@ module cellar(){
 
 module office_floor(){
     //front office window area
-    square([office_front_width, office_front_length]);
+    difference() {
+        square([office_front_width, office_front_length]);
+        translate([office_front_width-office_front_door_cutout_width,office_front_length-office_front_door_cutout_length]) square([office_front_door_cutout_width,office_front_door_cutout_length]);
+    }
     //main office area
     translate([0,office_front_length]) square([office_main_width, office_main_length]);
     //storage, kitchen, toilet hall
@@ -38,6 +43,10 @@ module office_floor(){
     translate([office_main_width-office_toilet_width, office_front_length+office_main_length + office_back_length + interior_wall_thickness]) {
         square([office_toilet_width, office_toilet_length]);
     }
+}
+
+module office_ceiling(){
+    translate([0,0,office_height]) office_floor();
 }
 
 module interior_wall(){
@@ -52,7 +61,11 @@ module kitchen_hall_wall() {
     translate([office_main_width-office_hall_width-interior_wall_thickness, office_front_length+office_main_length+interior_wall_thickness]) cube([interior_wall_thickness, office_back_length, office_height]);
 }
 
-//cellar();
+
+
+
+translate([0,15000]) cellar();
+//office_ceiling();
 office_floor();
 interior_wall();
 storage_kitchen_wall();
