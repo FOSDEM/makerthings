@@ -14,7 +14,7 @@ office_main_length = 6680;
 office_storage_width = 2340;
 office_back_length = 1500;
 office_kitchen_width = 2340;
-office_corridor_width = 1080;
+office_hall_width = 1080;
 office_toilet_width = 1000;
 office_toilet_length = 2130;
 office_height = 2620;
@@ -40,5 +40,20 @@ module office_floor(){
     }
 }
 
+module interior_wall(){
+    translate([0, office_front_length + office_main_length]) cube([office_main_width, interior_wall_thickness, office_height]);
+}
+
+module storage_kitchen_wall(){
+    translate([office_storage_width,office_front_length+office_main_length+interior_wall_thickness]) cube([interior_wall_thickness,office_back_length,office_height]);
+}
+
+module kitchen_hall_wall() {
+    translate([office_main_width-office_hall_width-interior_wall_thickness, office_front_length+office_main_length+interior_wall_thickness]) cube([interior_wall_thickness, office_back_length, office_height]);
+}
+
 //cellar();
 office_floor();
+interior_wall();
+storage_kitchen_wall();
+kitchen_hall_wall();
