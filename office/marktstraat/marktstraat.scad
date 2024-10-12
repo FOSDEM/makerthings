@@ -122,7 +122,7 @@ translate([600,office_front_length+office_main_length+interior_wall_thickness+of
 translate([2250,office_front_length+office_main_length+interior_wall_thickness+office_back_length-800,0]) rotate([0,0,90]) almamidi(rackw=800, rackh=2250, shelves=2, shelfstarth=1250);
 
 // kitchen
-translate([office_storage_width+interior_wall_thickness+office_kitchen_width-550,office_front_length+ office_main_length+interior_wall_thickness+office_back_length-550,0]) fridge()
+translate([office_storage_width+interior_wall_thickness+office_kitchen_width-550,office_front_length+ office_main_length+interior_wall_thickness+office_back_length-550,0]) fridge();
 
 // cellar
 translate([430,15000,0]) rotate([0,0,90]) voyagerstack();
