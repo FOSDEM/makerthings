@@ -1,3 +1,5 @@
+
+
 cube([10000, 5880, 1]); // room
 translate([0,0,2720]) difference() {
     cube([10000, 5880, 50]);
@@ -18,17 +20,17 @@ module desk_island() {
 }
 
 module cupboard() {
-    color("#0ff") cube([480, 760, 1090]);
-    color("#0af") translate([50,350,1090]) cube([280, 360, 350]);
+    color("#3c4254") cube([480, 760, 1090]);
+    color("#7e888e") translate([50,350,1090]) cube([280, 360, 350]);
 }
 
 module fridge() {
-    color("#aaf") cube([550, 550, 1430]);
-    color("#faf") translate([50,50,1430]) cube([450, 450, 350]);
+    color("#fff") cube([550, 550, 1430]);
+    color("#3c4245") translate([50,50,1430]) cube([450, 450, 350]);
 }
 
 module storagerack() {
-    color("#0f0") difference() {
+    color("#aaa9ad") difference() {
         cube([500, 3010, 2300]);
         translate([-100,100,0]) cube([700, 2810, 475]);
         translate([-100,100,525]) cube([700, 2810, 420]);
@@ -41,10 +43,8 @@ module storagerack() {
 }
 
 module serverrack() {
-    color("#f22") {
-        cube([800,600,1200]);
-        translate([-600,0,0]) cube([2000,600,1]);
-    }
+    color("#000") cube([800,600,1200]);
+    color("#f00") translate([-600,0,0]) cube([2000,600,1]);
 }
 
 module lasertable() {
@@ -107,7 +107,7 @@ module almamidi(rackw=800, rackl=2010, rackh=2500, shelves=4, shelfstarth=300) {
     }
 }
 
-translate([0, 0, 1]) color("#555") {
+translate([0, 0, 1]) color("#ebebeb") {
     translate([0, 240, 0]) cube([200, 810, 2000]); // heating
     translate([0, 4850, 0]) cube([200, 810, 2000]); // heating
     translate([0, 2480, 0]) cube([50, 810, 2000]); // door
@@ -116,9 +116,9 @@ translate([0, 0, 1]) color("#555") {
 
     translate([9930, 1650, 0]) cube([80, 2370, 950]); // heating
 
-    translate([715,0,1920]) cube([565,50,575]);
-    translate([1400,0,1920]) cube([575,50,575]);
-    translate([2095,0,1920]) cube([575,50,575]);
+    translate([715,0,1920]) cube([565,50,575]); // small window
+    translate([1400,0,1920]) cube([575,50,575]); // small window
+    translate([2095,0,1920]) cube([575,50,575]); // small window
 }
 
 translate([0, 0, 1]) {
@@ -134,7 +134,7 @@ translate([0, 0, 1]) {
     translate([8000,4800,0]) rotate(90) almamidi(rackw=1000, shelves=2, shelfstarth=1750); // almamidi over boxes
     translate([9930,4800,0]) rotate(90) almamidi(rackw=1000, shelves=2, shelfstarth=1750); // almamidi over boxes
 
-    translate([1500, 0,0]) desk_island(); // desk island
+    translate([1300, 0,0]) desk_island(); // desk island
 
     translate([4500,0,0]) lasertable(); // laser
 
