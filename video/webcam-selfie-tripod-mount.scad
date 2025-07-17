@@ -13,6 +13,9 @@ cubet=15; // thichness of the cube holding the thing
 cubew=15;
 cubel=65;
 
+flangel=75;
+flanget=2;
+
 headt=5.5; // thickness of the rings protruding from the cube
 headw=15; // total width of the ring thing
 headl=24; // how far the rings protrude
@@ -34,7 +37,8 @@ module head() {
         translate([headl-5,4,-1]) cube([20,7,headt+2]);
     }
     
-   translate([0,-cubel/2,0]) cube([cubew,65,cubet]);
+   translate([0,-cubel/2,0]) cube([cubew,cubel,cubet]);
+   translate([0,-flangel/2,0]) cube([cubew,flangel,flanget]);
 }
 
 head();
